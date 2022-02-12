@@ -1,3 +1,5 @@
+from os import minor
+import re
 import sys
 
 # TODO:clean up prints
@@ -31,8 +33,7 @@ def swap_lines(matrix, i):
 
 
 def count_result(matrix):
-    n = validate_matrix(matrix)
-    print_matrix(matrix)
+    n = len(matrix)
     for i in range(0, n):
 
         if(matrix[i][i] == 0):
@@ -55,3 +56,20 @@ def count_result(matrix):
                 matrix[j_before_i][k] = matrix[j_before_i][k] - matrix[i][k]*i_head
 
     return [round(matrix[i][n], 3) for i in range(0, len(matrix))]
+
+
+def count_matrix_det(matrix):
+    det = 0
+    for i in range(len(matrix[0])):
+        if(len(matrix) > 1):
+            minor = [line[:i] + line[(i + 1):] for line in matrix[1:]]
+            det += (-1)**(i)*matrix[0][i]*count_matrix_det(minor)
+        elif (len(matrix) == 1):
+            return matrix[0][0]
+        else:
+            print("Error: can't count det of matrix with dim less then 1.")
+    return det
+
+def count_residual_vector(matrix, solution):
+    return [sum([solution[i]*line[i]  for i in range(len(line) - 1)]) - line[len(line) - 1] for line in matrix]
+    
