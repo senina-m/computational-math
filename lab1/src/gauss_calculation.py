@@ -7,19 +7,21 @@ import sys
 def validate_matrix(matrix):
 
     if(matrix == []):
-        print("Input data is empty")
+        print("Error: Input data is empty")
         sys.exit(1)
     n = len(matrix)
 
     for line in matrix:
         if len(line) - 1 != n:
-            print("Invalide amount of numbers in lines")
+            print("Error: Invalide amount of numbers in lines")
             sys.exit(1)
     return n
 
-def print_matrix(matrix):
+def print_matrix(label, matrix):
+    print(f"________{label}________")
     for line in matrix:
             print(line)
+    print("________________________\n")
 
 
 def swap_lines(matrix, i):
@@ -27,12 +29,10 @@ def swap_lines(matrix, i):
         if(matrix[j][i] != 0):
             matrix[j], matrix[i] = matrix[i], matrix[j]
             return matrix
-    print("System has no uniq splution!")
-    print_matrix(matrix)
+    print_matrix("Warning: System has no uniq splution!", matrix)
     sys.exit(0)
 
-
-def count_result(matrix):
+def triangulize_matrix(matrix):
     n = len(matrix)
     for i in range(0, n):
 
@@ -47,7 +47,12 @@ def count_result(matrix):
             j_line_head = matrix[j_after_i][i]
             for k in range(i, n + 1):
                 matrix[j_after_i][k] = matrix[j_after_i][k] - j_line_head*matrix[i][k]
+    return matrix
 
+
+def count_result(matrix):
+    n = len(matrix)
+    matrix = triangulize_matrix(matrix)
 
     for i in range(1, n):
         for j_before_i in range(0, i):

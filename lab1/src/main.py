@@ -6,21 +6,17 @@ from gauss_calculation import count_matrix_det
 from gauss_calculation import count_residual_vector
 from gauss_calculation import validate_matrix
 from gauss_calculation import print_matrix
+from gauss_calculation import triangulize_matrix
 import numpy as np
 
-# Вычисление определителя
-# Вывод треугольной  матрицы (включая преобразованный столбец В)
-# Вывод вектора неизвестных: x1,  x2,  …, xn
-# Вывод вектора невязок: r1,  r,  …, rn
-
-filename = input("Read data from file? (y/n)")
+response = input("Read data from file? (y/n)")
 matrix = []
 
-if (filename == "n"):
+if (response == "n"):
     matrix = read_from_stdin()
-elif (filename == "y"):
+elif (response == "y"):
+    filename = input("Enter filepath: ")
     matrix = read_from_file(filename)
-
 
 validate_matrix(matrix)
 
@@ -28,9 +24,13 @@ det = count_matrix_det([line[:-1] for line in matrix])
 print(f"Matrix det:{round(det, 3)}")
 # print(f"Numpy det:{round(np.linalg.det(np.array([line[:-1] for line in matrix])), 3)}")
 
-solution = count_result(matrix)
+triangle_matrix = triangulize_matrix(matrix.copy())
+print(f"Triangle matrix:")
+print_matrix("triangle matrix", [[round(value, 3) for value in line] for line in triangle_matrix])
+
+solution = count_result(matrix.copy())
 print(f"Matrix solution:{solution}")
 # print(f"Numpy mattix solution:{np.linalg.solve([line[:-1] for line in matrix], [line[len(line) - 1] for line in matrix])}")
 
 residual_vector = count_residual_vector(matrix, solution)
-print(f"Residual vector:{residual_vector}")
+print(f"Residual vector:{[round(value, 6) for value in residual_vector]}")

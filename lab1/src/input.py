@@ -23,10 +23,12 @@ def read_from_stdin():
 def read_from_file(filename):
     f = open(filename, "r")
     matrix = []
-    data = re.split(" \t", f.readline().strip())
+    data = f.readline().strip().split(" ")
     data = [float(i) for i in data]
-    while (data != []):
-        matrix.append(data)
-        data = re.split(" \t", f.readline().strip())
 
+    for line in range (len(data) - 2):
+        matrix.append(data)
+        data = f.readline().strip().split(" ")
+        data = [float(i) for i in data]
+    matrix.append(data)
     return matrix
