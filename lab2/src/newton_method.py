@@ -1,6 +1,5 @@
 import numpy as np
 from scipy.misc import derivative
-from sympy import false, true
 
 def find_root_newton(equation, start, stop, epsilon):
     if not check_interval(equation, start, stop): return None
@@ -18,7 +17,7 @@ def find_root_newton(equation, start, stop, epsilon):
 
 def check_interval(equation, start, stop):
     #TODO: how to check that function is defined and infinit on interval
-    if  not equation(start)*equation(stop) < 0: return false
+    if  not equation(start)*equation(stop) < 0: return False
     start_derivative_fst = derivative(equation, start, n=1)
     start_derivative_snd = derivative(equation, start, n=2)
 
@@ -26,9 +25,9 @@ def check_interval(equation, start, stop):
     for i in np.arange(start, stop, 0.01):
         if not ((start_derivative_fst*derivative(equation, i, n=1) > 0) 
         and (start_derivative_snd*derivative(equation, i, n=2) >= 0)):
-            return false
-        else: 
-            return true
+            print(f"start_fst={start_derivative_fst}, start_snd={start_derivative_snd}, derivative(n=1)={derivative(equation, i, n=1)} derivative(n=2)={derivative(equation, i, n=2)}")
+            return False
+    return True
 
 
 def choose_x0(equation, start, stop):
@@ -36,4 +35,4 @@ def choose_x0(equation, start, stop):
     if(start_derivative_snd*start > 0):
         return start
     else:
-        return true
+        return True

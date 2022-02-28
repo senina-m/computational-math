@@ -23,5 +23,16 @@ def read_interval_console():
 
     if(stop <= start):
         print("Error! Stop has to be greater than start!")
-        return read_interval_console() #TODO: check that such recursion works
+        return read_interval_console() 
     else: return start, stop
+
+def read_epsilon_console():
+    print("Enter accuracy:")
+    return float(input())
+
+def read_method():
+    print("Choose method to calculate root:")
+    print("1 -------- Newton method")
+    print("2 -------- secant method")
+    print("3 -------- simple iteration method")
+    return int(input()) #TODO: pass to main enum
