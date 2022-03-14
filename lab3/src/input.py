@@ -1,18 +1,20 @@
+import math
+
 def read_equation_console():
     print("Choose one of five equations:")
-    print("1 -------- x^3 + 2*x^2 + 3*x (defalut)")
+    print("1 -------- sin(x) (defalut)")
     # print("2 -------- -x^3 +  7*x^2 - 3*x - 2")
     # print("3 -------- x^3 - 2")
     # print("4 -------- x^2 - 1")
     # print("5 -------- -x^2 - 3*x + 3")
 
     match int(input()):
-        case 1: equation = lambda x: x**3 + 2*x**2 + 3*x
+        case 1: equation = lambda x: math.sin(x)
         # case 2: equation = lambda x: -x**3 +  7*x**2 - 3*x - 2
         # case 3: equation = lambda x: x**3 - 2
         # case 4: equation = lambda x: x**2 - 1
         # case 5: equation = lambda x: -x**2 - 3*x + 3
-        case _: equation = lambda x: x**3 + 2*x**2 + 3*x
+        case _: equation = lambda x: math.sin(x)
     return equation
 
 def read_interval_console():
@@ -32,7 +34,6 @@ def read_epsilon_console():
 
 def read_method():
     print("Choose method to calculate root:")
-    print("1 -------- Newton method")
-    print("2 -------- secant method")
-    print("3 -------- simple iteration method")
+    print("1 -------- trapeze method")
+    print("2 -------- rectangles method")
     return int(input()) #TODO: pass to main enum
