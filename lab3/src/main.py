@@ -8,6 +8,7 @@ from input import read_method
 
 from trapeze_method import calculate_integral_trapeze_method
 from rectangles_method import calculate_integral_rectangles_method
+from simpson_method import calculate_integral_simpson_method
 
 equation = read_equation_console()
 start, stop = read_interval_console()
@@ -17,8 +18,14 @@ match read_method():
         calculate_integral_trapeze_method(equation, start, stop, epsilon)
     case 2:
         calculate_integral_rectangles_method(equation, start, stop, epsilon)
+    case 3:
+        calculate_integral_simpson_method(equation, start, stop, epsilon)
     case _:
         print("Error with choosing method!")
+
+# calculate_integral_rectangles_method(equation, start, stop, epsilon)
+# calculate_integral_trapeze_method(equation, start, stop, epsilon)
+# calculate_integral_simpson_method(equation, start, stop, epsilon)
 
 plt.plot([i for i in np.arange(start, stop, epsilon/2)], [equation(i) for i in np.arange(start, stop, epsilon/2)])
 plt.title(f"integral in [{start},{stop}]")

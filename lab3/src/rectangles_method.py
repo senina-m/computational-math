@@ -2,15 +2,13 @@ import math
 from scipy.misc import derivative
 import numpy as np
 
-from lab3.src.trapeze_method import interval_width
-
 def calculate_integral_rectangles_method(f, a, b, e):
     result_start, num_of_intervals_start = count_integral_start(f, a, b, e)
     result_middle, num_of_intervals_middle = count_integral_middle(f, a, b, e)
     result_stop, num_of_intervals_stop = count_integral_stop(f, a, b, e)
-    print(f"start integral={result_start}, with num of intervals={num_of_intervals_start}")
-    print(f"middle integral={result_middle}, with num of intervals={num_of_intervals_middle}")
-    print(f"stop integral={result_stop}, with num of intervals={num_of_intervals_stop}")
+    print(f"rectangles start integral={result_start}, with num of intervals={num_of_intervals_start}")
+    print(f"rectangles middle integral={result_middle}, with num of intervals={num_of_intervals_middle}")
+    print(f"rectangles stop integral={result_stop}, with num of intervals={num_of_intervals_stop}")
 
 def count_integral_start(f, a, b, e):
     result_start = lambda a, b, h : sum([f(i) for i in np.arange(a, b, h)]) * h
@@ -30,8 +28,8 @@ def count_integral(result_formula, f, a, b, e):
     h = interval_width(a, b, num_of_intervals)
 
     result = result_formula(a, b, h)
-    prev_result = float(math.inf)
-    while(math.abs(result - prev_result) / 3 > e):
+    prev_result = float('inf')
+    while(abs(result - prev_result) / 3 > e):
         num_of_intervals *= 2
         h = interval_width(a, b, num_of_intervals)
         prev_result = result
@@ -39,7 +37,7 @@ def count_integral(result_formula, f, a, b, e):
     return result, num_of_intervals
 
 def interval_width(a, b, num_of_intervals):
-    return (b - a) / num_of_intervals
+    return abs(b - a) / num_of_intervals
 
 #count accuracy by 2nd derivative
 

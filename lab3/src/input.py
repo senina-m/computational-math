@@ -36,4 +36,5 @@ def read_method():
     print("Choose method to calculate root:")
     print("1 -------- trapeze method")
     print("2 -------- rectangles method")
+    print("3 -------- simpson method")
     return int(input()) #TODO: pass to main enum
