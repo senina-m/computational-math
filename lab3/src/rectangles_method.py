@@ -1,6 +1,7 @@
 import math
 from scipy.misc import derivative
 import numpy as np
+from abstract_integral_rune_check import count_abstract_integral_rune_check
 
 def calculate_integral_rectangles_method(f, a, b, e):
     result_start, num_of_intervals_start = count_integral_start(f, a, b, e)
@@ -11,33 +12,16 @@ def calculate_integral_rectangles_method(f, a, b, e):
     print(f"rectangles stop integral={result_stop}, with num of intervals={num_of_intervals_stop}")
 
 def count_integral_start(f, a, b, e):
-    result_start = lambda a, b, h : sum([f(i) for i in np.arange(a, b, h)]) * h
-    return count_integral(result_start, f, a, b, e)
+    result_start = lambda h : sum([f(i) for i in np.arange(a, b, h)]) * h
+    return count_abstract_integral_rune_check(result_start, a, b, e * 3)
 
 def count_integral_middle(f, a, b, e):
-    result_start = lambda a, b, h : sum([f(i) for i in np.arange(a + h/2, b, h)]) * h
-    return count_integral(result_start, f, a, b, e)
+    result_start = lambda h : sum([f(i) for i in np.arange(a + h/2, b, h)]) * h
+    return count_abstract_integral_rune_check(result_start, a, b, e * 3)
 
 def count_integral_stop(f, a, b, e):
-    result_start = lambda a, b, h : sum([f(i) for i in np.arange(a + h, b, h)]) * h
-    return count_integral(result_start, f, a, b, e)
-
-
-def count_integral(result_formula, f, a, b, e):
-    num_of_intervals = 6
-    h = interval_width(a, b, num_of_intervals)
-
-    result = result_formula(a, b, h)
-    prev_result = float('inf')
-    while(abs(result - prev_result) / 3 > e):
-        num_of_intervals *= 2
-        h = interval_width(a, b, num_of_intervals)
-        prev_result = result
-        result = result_formula(a, b, h)
-    return result, num_of_intervals
-
-def interval_width(a, b, num_of_intervals):
-    return abs(b - a) / num_of_intervals
+    result_start = lambda h : sum([f(i) for i in np.arange(a + h, b, h)]) * h
+    return count_abstract_integral_rune_check(result_start, a, b, e * 3)
 
 #count accuracy by 2nd derivative
 

@@ -1,24 +1,17 @@
-import math
-from scipy.misc import derivative
 import numpy as np
+from abstract_integral_rune_check import count_abstract_integral_rune_check
 
 def calculate_integral_simpson_method(f, a, b, e):
-    num_of_intervals = 4
-    h = count_interval_width(a, b, num_of_intervals)
-    odd_sum = count_odd_sum(f, a, b, num_of_intervals)
-    even_sum = count_even_sum(f, a, b, num_of_intervals)
-
-    result = h/3 * (f(a) + 4 * odd_sum + 2 * even_sum + f(b))
-    prev_result = float('inf')
-    while(abs(result - prev_result)/15 > e):
-        prev_result = result
-        num_of_intervals *= 2
-        h = count_interval_width(a, b, num_of_intervals)
-        odd_sum = count_odd_sum(f, a, b, num_of_intervals)
-        even_sum = count_even_sum(f, a, b, num_of_intervals)
-        result = h/3 * (f(a) + 4 * odd_sum + 2 * even_sum + f(b))
+    result_formula = lambda h: simpson_formula(h, a, b, f)
+    result, num_of_intervals =  count_abstract_integral_rune_check(result_formula, a, b, e * 15)
 
     print(f"simpson integral={result}, while the number of intervals was={num_of_intervals}")
+
+def simpson_formula(h, a, b, f):
+    num_of_intervals = abs(b - a) / h
+    odd_sum = count_odd_sum(f, a, b, num_of_intervals)
+    even_sum = count_even_sum(f, a, b, num_of_intervals)
+    return h/3 * (f(a) + 4 * odd_sum + 2 * even_sum + f(b))
 
 def count_even_sum(f, a, b, num_of_intervals):
     h = count_interval_width(a, b, num_of_intervals)

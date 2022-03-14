@@ -1,22 +1,14 @@
+from cgitb import reset
 import math
+from unittest import result
 from scipy.misc import derivative
 import numpy as np
+from abstract_integral_rune_check import count_abstract_integral_rune_check
 
 def calculate_integral_trapeze_method(f, a, b, e):
-    
-    num_of_intervals = 6
-    h = interval_width(a, b, num_of_intervals)
-    result = (sum([f(i) for i in np.arange(a, b - h, e / 2)]) + (a + b) / 2) * h
-    prev_result = float('inf')
-    while(abs(result - prev_result) / 3 > e):
-        num_of_intervals *= 2
-        h = interval_width(a, b, num_of_intervals)
-        prev_result = result
-        result = (sum([f(i) for i in np.arange(a, b - h, e / 2)]) + (a + b) / 2) * h
-    print(f"trapeze integral={result}, where num of inerval was={num_of_intervals}")
-
-def interval_width(a, b, num_of_intervals):
-    return abs(b - a) / num_of_intervals
+    result_formula = lambda h : (sum([f(i) for i in np.arange(a + h, b, h)]) + (f(a) + f(b)) / 2)* h
+    integral, num_of_intervals = count_abstract_integral_rune_check(result_formula, a, b, e * 3)
+    print(f"trapeze integral={integral}, where num of inerval was={num_of_intervals}")
 
 #count accuracy by 2nd derivative
 

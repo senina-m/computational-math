@@ -3,14 +3,14 @@ import math
 def read_equation_console():
     print("Choose one of five equations:")
     print("1 -------- sin(x) (defalut)")
-    # print("2 -------- -x^3 +  7*x^2 - 3*x - 2")
+    print("2 -------- -x^3 +  7*x^2 - 3*x - 2")
     # print("3 -------- x^3 - 2")
     # print("4 -------- x^2 - 1")
     # print("5 -------- -x^2 - 3*x + 3")
 
     match int(input()):
         case 1: equation = lambda x: math.sin(x)
-        # case 2: equation = lambda x: -x**3 +  7*x**2 - 3*x - 2
+        case 2: equation = lambda x: -x**3 +  7*x**2 - 3*x - 2
         # case 3: equation = lambda x: x**3 - 2
         # case 4: equation = lambda x: x**2 - 1
         # case 5: equation = lambda x: -x**2 - 3*x + 3
