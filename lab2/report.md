@@ -179,17 +179,144 @@ $|x_n − x_{n−1}| < \frac{1−q}{q}ε$ (при $0,5 < q < 1$)
 |10     |-0.491 |-0.489 |-0.49  |-0.028 |0.002  |0.002|
 |11     |-0.49  |-0.489 |-0.49  |-0.013 |0.002  |0.001|
 
+Таблица итерационного процесса поиска левого корня уравнения $1,62x^3-8,15x^2+4,39x + 4,29 = 0$ методом простой итерации. Результат: $x = 1.274$
+|num    |$x_{i-1}$      |$f(x)$      |$x_i$      |$\phi(x_i)$| abs($x_i-x_{i-1}$)|
+|-------|-------|-------|-------|-------|-------|
+|0      |4      |-12.173        |3.057  |3.057  |0.943|
+|1      |3.057  |3.933  |0.698  |0.698  |2.358|
+|2      |0.698  |-1.634 |1.46   |1.46   |0.762|
+|3      |1.46   |1.073  |1.144  |1.144  |0.316|
+|4      |1.144  |-0.666 |1.352  |1.352  |0.208|
+|5      |1.352  |0.435  |1.223  |1.223  |0.129|
+|6      |1.223  |-0.277 |1.307  |1.307  |0.084|
+|7      |1.307  |0.18   |1.253  |1.253  |0.054|
+|8      |1.253  |-0.115 |1.288  |1.288  |0.035|
+|9      |1.288  |0.074  |1.266  |1.266  |0.022|
+|10     |1.266  |-0.048 |1.28   |1.28   |0.014|
+|11     |1.28   |0.031  |1.271  |1.271  |0.009|
+|12     |1.271  |-0.02  |1.277  |1.277  |0.006|
+|13     |1.277  |0.013  |1.273  |1.273  |0.004|
+|14     |1.273  |-0.008 |1.276  |1.276  |0.002|
+|15     |1.276  |0.005  |1.274  |1.274  |0.002|
+|16     |1.274  |-0.003 |1.275  |1.275  |0.001|
+|17     |1.275  |0.002  |1.274  |1.274  |0.001|
+
 ## Листинг программы
 [Ссылка репозиторий с кодом всей программы](https://github.com/senina-m/computational-math/tree/main/lab2)
+
+Метод секущих
+```
+def find_root_scant(f, start, stop, epsilon):
+    if not check_interval(f, start, stop): return None
+    x0 = choose_x0(f, start, stop)
+    x1 = x0  - f(x0) / derivative(f, x0, n=1)
+
+    xi = x1
+    xi_prev = x0
+    while(abs(xi - xi_prev) > epsilon):
+        tmp = xi
+        xi = xi - f(xi) * (xi - xi_prev) / (f(xi) - f(xi_prev))
+        xi_prev = tmp
+    return xi
+```
+
+Метод Ньютона
+```
+def find_root_newton(equation, start, stop, epsilon):
+    if not check_interval(equation, start, stop): return None
+    x0 = choose_x0(equation, start, stop)
+    x1 = x0  - equation(x0) / derivative(equation, x0, n=1)
+
+    xi = x1
+    xi_prev = x0
+    while(abs(xi - xi_prev) > epsilon):
+        xi_prev = xi
+        xi = xi - equation(xi) / derivative(equation, xi, n=1)
+    return xi
+```
+Проверка, что метод Ньютона и метод секцщих применим на интервале:
+```
+def check_interval(equation, start, stop):
+    if  not equation(start)*equation(stop) < 0: return False
+    start_derivative_fst = derivative(equation, start, n=1)
+    start_derivative_snd = derivative(equation, start, n=2)
+
+    # points = [round(x * 0.01, 1) for x in range(start, stop)]
+    for i in np.arange(start, stop, 0.01):
+        if not ((start_derivative_fst*derivative(equation, i, n=1) > 0) 
+        and (start_derivative_snd*derivative(equation, i, n=2) >= 0)):
+            print(f"start_fst={start_derivative_fst}, start_snd={start_derivative_snd}, derivative(n=1)={derivative(equation, i, n=1)} derivative(n=2)={derivative(equation, i, n=2)}")
+            return False
+    return True
+```
+Метод простых итераций
+```
+def find_root_simple_iteration(f, start, stop, epsilon):
+    l = find_lambda(f, start, stop)
+    q = find_q(f, start, stop)
+
+    phi = lambda x: x + f(x)*l
+
+    if(q > 0.5): check = lambda epsilon, xi, xi_prev, q: abs(xi - xi_prev) > epsilon
+    else: check = lambda epsilon, xi, xi_prev, q: abs(xi - xi_prev) >= (1-q/q)*epsilon
+
+    x0 = start
+    x1 = phi(x0)
+
+    xi = x1
+    xi_prev = x0
+
+    while(check(epsilon, xi, xi_prev, q)):
+        tmp = xi
+        xi = phi(xi_prev)
+        xi_prev = tmp
+
+    return xi
+
+    def find_lambda(f, start, stop):
+    max_derivative = abs(derivative(f, start, n=1))
+    for i in np.arange(start, stop, 0.01):
+        if max_derivative < abs(derivative(f, i, n=1)):
+            max_derivative = abs(derivative(f, i, n=1))
+    return -1/max_derivative
+
+
+def find_q(f, start, stop):
+   max_derivative = derivative(f, start, n=1)
+   for i in np.arange(start, stop, 0.01):
+      if max_derivative < abs(derivative(f, i, n=1)):
+         max_derivative = abs(derivative(f, i, n=1))
+   return max_derivative
+```
 
 ## Примеры и результаты работы программы
 
 ### Пример 1
 Ввод:
+```
+Choose one of five equations:
+1 -------- x^3 + 2*x^2 + 3*x (defalut)
+2 -------- -x^3 +  7*x^2 - 3*x - 2
+3 -------- x^3 - 2
+4 -------- x^2 - 1
+5 -------- -x^2 - 3*x + 3
+1
+Enter the interval start float value -0.5
+Enter the interval stop float value (notice, it has to be greater then start)
+1
+Enter accuracy:
+0.001
+Choose method to calculate root:
+1 -------- Newton method
+2 -------- secant method
+3 -------- simple iteration method
+1
+```
 Вывод:
-### Пример 2
-Ввод:
-Вывод:
+```
+root=0.0001991099568844979 in [-0.5, 1.0]
+```
+![newton_img](report_sourse/newton_method.png)
 
 ## Выводы
-В этой лабораторной работе я научилась решать
+В этой лабораторной работе я научилась решать нелинейные уравнения методами Секущих, Ньютона и простых итераций на языке Python.

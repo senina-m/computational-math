@@ -28,6 +28,7 @@ match read_method():
         print("Error with choosing method!")
 
 if root != None:
+    print(f"root={root} in [{start}, {stop}]")
     plt.plot([i for i in np.arange(start, stop, 0.01)], [equation(i) for i in np.arange(start, stop, 0.01)])
     plt.plot(root, equation(root), 'o')
     plt.title(f"Root in [{start},{stop}]")

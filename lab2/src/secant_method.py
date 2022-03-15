@@ -16,4 +16,3 @@ def find_root_scant(f, start, stop, epsilon):
         xi = xi - f(xi) * (xi - xi_prev) / (f(xi) - f(xi_prev))
         xi_prev = tmp
     return xi
-

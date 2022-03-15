@@ -19,8 +19,10 @@ def half_devidion():
 def hord_method():
 
     print("----------- Метод хорд ------------")
-    a = 3.0585
-    b = 5
+    # a = 3.0585
+    # b = 5
+    a = 0.2953
+    b = 3.0585
     e = 0.001
     f = lambda x : 1.62*x**3 - 8.15*x**2 + 4.39*x + 4.29
     i = 0
@@ -36,15 +38,15 @@ def hord_method():
     print(f"calculation result: root={round(xi, 3)}")
 
 def simple_iteration():
-
     print("----------- Метод простой итерации ------------")
-    a = 0.2953
-    b = 3.0585
+    a = 2
+    b = 4
     e = 0.001
 
     l = 100
+    lambd =  1/(250871/48600)
     f = lambda x : 1.62*x**3 - 8.15*x**2 + 4.39*x + 4.29
-    phi = lambda x : 162*x**3 - 815*x**2 + 440*x + 429
+    phi = lambda x : x + lambd*(f(x))
     i = 0
     xi = b
     x_prev = xi + 2*e
@@ -52,11 +54,12 @@ def simple_iteration():
     while(abs(xi - x_prev) > e):
         x_prev = xi
         xi = phi(xi)
-        print(f"i={i} x_(i-1)={round(x_prev, 3)} f(xi)={round(f(xi), 3)} xi={round(xi, 3)} phi(x_prev)={round(phi(x_prev),3)} |a-b|={round(abs(xi - x_prev),3)}")
-        # print(f"|{i}\t|{round(x_prev, 3)}\t|{round(f(xi), 3)}\t|{round(xi, 3)}\t|{round(phi(x_prev),3)}\t|{round(abs(xi - x_prev),3)}|")
+        # print(f"i={i} x_(i-1)={round(x_prev, 3)} f(xi)={round(f(xi), 3)} xi={round(xi, 3)} phi(x_prev)={round(phi(x_prev),3)} |a-b|={round(abs(xi - x_prev),3)}")
+        print(f"|{i}\t|{round(x_prev, 3)}\t|{round(f(xi), 3)}\t|{round(xi, 3)}\t|{round(phi(x_prev),3)}\t|{round(abs(xi - x_prev),3)}|")
         i += 1
     print(f"calculation result: root={round(xi, 3)}")
 
-# hord_method()
+
+hord_method()
 # half_devidion()
 simple_iteration()
