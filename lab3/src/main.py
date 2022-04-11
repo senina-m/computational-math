@@ -6,13 +6,16 @@ from input import read_interval_console
 from input import read_epsilon_console
 from input import read_method
 
-from trapeze_method import calculate_integral_trapeze_method
-from rectangles_method import calculate_integral_rectangles_method
-from simpson_method import calculate_integral_simpson_method
+from interals_counting.trapeze_method import calculate_integral_trapeze_method
+from interals_counting.rectangles_method import calculate_integral_rectangles_method
+from interals_counting.simpson_method import calculate_integral_simpson_method
 
 equation = read_equation_console()
-start, stop = read_interval_console()
-epsilon = read_epsilon_console()
+# start, stop = read_interval_console()
+# epsilon = read_epsilon_console()
+
+start, stop = 0, 2
+epsilon = 0.01
 # match read_method():
 #     case 1:
 #         calculate_integral_trapeze_method(equation, start, stop, epsilon)

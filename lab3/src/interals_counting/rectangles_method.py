@@ -1,7 +1,7 @@
 import math
 from scipy.misc import derivative
 import numpy as np
-from abstract_integral_rune_check import count_abstract_integral_rune_check
+from interals_counting.abstract_integral_rune_check import count_abstract_integral_rune_check
 
 def calculate_integral_rectangles_method(f, a, b, e):
     result_start, num_of_intervals_start = count_integral_start(f, a, b, e)
@@ -12,7 +12,7 @@ def calculate_integral_rectangles_method(f, a, b, e):
     print(f"rectangles stop integral={result_stop}, with num of intervals={num_of_intervals_stop}")
 
 def count_integral_start(f, a, b, e):
-    result_start = lambda h : sum([f(i) for i in np.arange(a, b, h)]) * h
+    result_start = lambda h : sum([f(i) for i in np.arange(a, b - h, h)]) * h
     return count_abstract_integral_rune_check(result_start, a, b, e * 3)
 
 def count_integral_middle(f, a, b, e):

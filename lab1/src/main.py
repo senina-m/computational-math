@@ -1,12 +1,13 @@
 import imp
 from input import read_from_stdin
 from input import read_from_file
-from gauss_calculation import count_result, print_matrix
+from gauss_calculation import count_matrix_det_by_gauss, count_result, print_matrix
 from gauss_calculation import count_matrix_det
 from gauss_calculation import count_residual_vector
 from gauss_calculation import validate_matrix
 from gauss_calculation import print_matrix
 from gauss_calculation import triangulize_matrix
+from gauss_calculation import count_matrix_det_by_gauss
 import numpy as np
 
 response = input("Read data from file? (y/n)")
@@ -21,7 +22,8 @@ elif (response == "y"):
 validate_matrix(matrix)
 
 det = count_matrix_det([line[:-1] for line in matrix])
-print(f"Matrix det:{round(det, 3)}")
+det_gauss = count_matrix_det_by_gauss(matrix.copy())
+print(f"Matrix det:{round(det, 3)}, det_gauss:{round(det_gauss, 3)}")
 # print(f"Numpy det:{round(np.linalg.det(np.array([line[:-1] for line in matrix])), 3)}")
 
 triangle_matrix = triangulize_matrix(matrix.copy())

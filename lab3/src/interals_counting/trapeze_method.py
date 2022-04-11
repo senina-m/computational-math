@@ -1,9 +1,7 @@
-from cgitb import reset
 import math
-from unittest import result
 from scipy.misc import derivative
 import numpy as np
-from abstract_integral_rune_check import count_abstract_integral_rune_check
+from interals_counting.abstract_integral_rune_check import count_abstract_integral_rune_check
 
 def calculate_integral_trapeze_method(f, a, b, e):
     result_formula = lambda h : (sum([f(i) for i in np.arange(a + h, b, h)]) + (f(a) + f(b)) / 2)* h

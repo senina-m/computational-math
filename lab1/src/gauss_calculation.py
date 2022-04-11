@@ -2,6 +2,8 @@ from os import minor
 import re
 import sys
 
+from numpy import multiply
+
 # TODO:clean up prints
 
 def validate_matrix(matrix):
@@ -27,7 +29,9 @@ def print_matrix(label, matrix):
 def swap_lines(matrix, i):
     for j in range(i + 1, len(matrix)):
         if(matrix[j][i] != 0):
+            # print_matrix(f"matrix before swap line i={i} and line j={j}", matrix)
             matrix[j], matrix[i] = matrix[i], matrix[j]
+            # print_matrix(f"matrix after swap line i={i} and line j={j}", matrix)
             return matrix
     print_matrix("Warning: System has no uniq splution!", matrix)
     sys.exit(0)
@@ -76,5 +80,13 @@ def count_matrix_det(matrix):
     return det
 
 def count_residual_vector(matrix, solution):
-    return [sum([solution[i]*line[i]  for i in range(len(line) - 1)]) - line[len(line) - 1] for line in matrix]
-    
+    return [sum([solution[i]*line[i]  for i in range(len(line) - 1)]) - line[-1] for line in matrix]
+
+def count_matrix_det_by_gauss(matrix):
+    n = len(matrix)
+    triangulized_matrix = triangulize_matrix(matrix)
+    det = 1
+    for i in range(n):
+        det *= triangulized_matrix[i][i]    
+    return det
+
