@@ -22,7 +22,7 @@ def power_approximation(points):
     result['b'] = b
 
     f = lambda i: a * (i ** b)
-    result['f'] = f
+    result['function'] = f
 
     result['string_function'] = f"{round(a, 3)}*x^{round(b, 3)}"
 

@@ -7,7 +7,7 @@ def read_data():
     #     matrix = read_stdin()
     # elif (response == "y"):
     #     filename = input("Enter filepath: ")
-        # matrix = read_file(filename)
+    #     matrix = read_file(filename)
     data = read_file("/home/senina/Desktop/itmo/computational-math/lab4/input")
     return data
 

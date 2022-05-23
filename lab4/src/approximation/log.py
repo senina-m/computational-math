@@ -20,7 +20,7 @@ def log_appproximation(points):
     result['b'] = b
 
     f = lambda i: a * log(i) + b
-    result['f'] = f
+    result['function'] = f
     result['string_function'] = f"{round(a, 3)}*ln(x) + {round(b, 3)}"
     result['variance'] = variance(points, f)
     result['standard_deviation'] = standard_deviation(points, f)

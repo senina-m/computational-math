@@ -20,7 +20,7 @@ def exp_approximation(points):
     result['b'] = b
 
     f = lambda i: a * exp(b * i)
-    result['f'] = f
+    result['function'] = f
     result['string_function'] = f"{round(a, 3)}*e^({round(b, 3)}*x)"
     result['variance'] = variance(points, f)
     result['standard_deviation'] = standard_deviation(points, f)
