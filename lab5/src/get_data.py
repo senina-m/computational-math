@@ -21,7 +21,6 @@ def get_data():
         except ValueError:
             print("Value has be integer! Try again from new line...")
 
-
     data.sort()
     print(f"Entered data:", data)
     x = [i[0] for i in data]
@@ -35,6 +34,7 @@ def get_data():
     print("Choose interpolation method:")
     print("1 ----------------- Newton")
     print("2 ----------------- Lagrange")
+    print("3 ----------------- both")
     while True:
         try:
             choose_data_method = int(input())

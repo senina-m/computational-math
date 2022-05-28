@@ -8,6 +8,6 @@ def lagrange_interpolation(x, y, point):
             if i != j:
                 c1 *= point - x[j]
                 c2 *= x[i] - x[j]
-        result += y[i][1] * c1 / c2
+        result += y[i] * c1 / c2
 
     return result

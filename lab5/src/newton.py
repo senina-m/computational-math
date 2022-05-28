@@ -15,7 +15,6 @@ def newton_const_h(x, y, point):
     finite_differences = count_finite_differences_const_h(x, y)
     if point <= x[n // 2]: # if point is closer to beginning we use FIRST Formula (forward)
         x0 = search_for_x0(x, point)
-        print(f"x0= ", x0)
         t = (point - x[x0]) / h
 
         result = finite_differences[x0][0]
@@ -25,14 +24,7 @@ def newton_const_h(x, y, point):
         t = (point - x[n - 1]) / h
 
         result = finite_differences[n - 1][0]
-        print(f"{round(finite_differences[n-1][0], 3)} + ")
         for i in range(1, n):
-            print(f"t_back ", t_back(t, i))
-            print(f"finite_differences[n - i - 1][i] ", finite_differences[n - i - 1][i])
-            print(f"factorial ", factorial(i))
-
-            print(f" + total ", (t_back(t, i) * finite_differences[n - i - 1][i]) / factorial(i))
-
             result += (t_back(t, i) * finite_differences[n - i - 1][i]) / factorial(i)
 
     return result
