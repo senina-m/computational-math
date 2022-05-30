@@ -3,12 +3,6 @@ from gauss import print_matrix, swap_lines
 
 def simple_iteration(matrix, e):
     print("------------simple iteration--------------")
-
-    # матрица должна быть записана в виде
-    # x_0 = a_1*x_1 + a_*2*x_2 + c_0
-    # x_1 = a_0*x_0 + a_*2*x_2 + c_1
-    # x_2 = a_0*x_0 + a_*1*x_1 + c_2
-
     print_matrix("matrix", matrix)
 
     n = len(matrix)
@@ -35,9 +29,9 @@ def simple_iteration(matrix, e):
             a = 0
             for j in range(n):
                 if j!=i:
-                    a += -matrix[i][j]*x_prev[j]
+                    a -= -matrix[i][j]*x_prev[j]
                     print(f"+ {round(-matrix[i][j], 3)}*{round(x_prev[j], 3)}")
-            x[i] = a + matrix[i][-1]
+            x[i] = a - matrix[i][-1]
             print(f"+ {matrix[i][-1]} = {round(x[i], 3)}")
 
         diff = max([abs(x_prev[i] - x[i]) for i in range(n)])
