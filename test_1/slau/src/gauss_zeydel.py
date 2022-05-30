@@ -41,16 +41,14 @@ def gauss_zeydel(matrix, e):
                     a += -matrix[i][j]*x[j]
                     print(f"+ {round(-matrix[i][j], 3)}*{round(x[j], 3)}")
             x[i] = a + matrix[i][-1]
-            print(f"+ {matrix[i][-1]} = {round(x[i], 3)}")
-
+            print(f"+ {matrix[i][-1]} = {round(x[i], 9)}")
         diff = max([abs(x_prev[i] - x[i]) for i in range(n)])
         print(f"{k}\t{round(x[0], 3)}\t{round(x[1], 3)}\t{round(x[2], 3)}\t{round(diff, 3)}")
 
         if diff < e:
             break
-        else:
-            x_prev = x
-            k += 1
+        x_prev = [xi for xi in x]
+        k += 1
     
     print("------------gauss_zeydel iteration end--------------")
     return x

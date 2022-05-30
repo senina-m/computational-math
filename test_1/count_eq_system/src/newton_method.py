@@ -2,7 +2,7 @@ import numpy as np
 from scipy.misc import derivative
 
 def find_root_newton(equation, start, stop, epsilon):
-    if not check_interval(equation, start, stop): return None
+    # if not check_interval(equation, start, stop): return None
     x0 = choose_x0(equation, start, stop)
     x1 = x0  - equation(x0) / derivative(equation, x0, n=1)
 

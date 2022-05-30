@@ -45,9 +45,8 @@ def simple_iteration(matrix, e):
 
         if diff < e:
             break
-        else:
-            x_prev = x
-            k += 1
+        x_prev = [xi for xi in x]
+        k += 1
     
     print("------------simple iteration end--------------")
     return x

@@ -6,7 +6,7 @@ from simple_iteration import simple_iteration
 matrix = [[0, 9, -1, -14], 
           [8, -2, 5, 12],
           [-3, -7, 1, 7]]
-e = 0.001
+e = 0.0000001
 
 # Решение слау методом Гаусса
 # print(f"Gauss result = {count_result(matrix)}")
