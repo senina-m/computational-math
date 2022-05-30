@@ -6,7 +6,7 @@ from milan import milan_differentiation
 from math import sin, exp, log2, sqrt
 
 def main():
-    # f, initial_conditions, h, bounds, accuracy, method = get_data()
+    f, f_result, initial_conditions, h, bounds, accuracy, method = get_data()
     # f = lambda x, y : 1/sqrt(x**2 - 1)
     # result_f = lambda x :  log2(abs(x + sqrt(x**2 - 1)))
     # initial_conditions = 0
@@ -28,10 +28,10 @@ def main():
     match (method):
         case "runge–kutta":
             result, x = runge_kutta_differentiation(f, initial_conditions, h, bounds, accuracy)
-            plot_result(f, x, result, method)
+            plot_result(f_result, x, result, method)
         case "milan":
             result, x = milan_differentiation(f, initial_conditions, h, bounds, accuracy)
-            plot_result(f, x, result, method)
+            plot_result(f_result, x, result, method)
         case "both":
             rungekutta_result, x = runge_kutta_differentiation(f, initial_conditions, h, bounds, accuracy)
             milan_result, x = milan_differentiation(f, initial_conditions, h, bounds, accuracy)

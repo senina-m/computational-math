@@ -22,7 +22,7 @@ def get_data():
                     print("Enter your choice again!")
         except ValueError:
             print("Value has be integer! Try again from new line...")
-    
+
     print("Enter the initial conditions as y(x_0)= ...")
     while True:
         try:
@@ -30,6 +30,14 @@ def get_data():
             break
         except ValueError:
             print("Value has be float! Try again from new line...")
+    
+    match (choose_data_method):
+        case 1:
+            f_result = 1 #TODO: f(x) = ... y0(x0)
+        case 2:
+            f_result = 1#TODO: f(x) = ... y0(x0)
+        case 3:
+            f_result = 1#TODO: f(x) = ... y0(x0)
 
     print("Enter segment's bounds (enter the values separated by a space):")
     while True:
