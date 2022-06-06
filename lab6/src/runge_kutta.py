@@ -8,6 +8,7 @@ def runge_kutta_differentiation(f, initial_conditions, h, bounds, accuracy):
     # для этих иксов нужно предсказать значение y
     x = [bounds[0] + h*i for i in range(n)]
     y = [0]*(n)
+    hes = [0]*(n) # ширина интервала для необходимой точности
     y[0] = initial_conditions
     
     for i in range(n - 1):
@@ -25,7 +26,8 @@ def runge_kutta_differentiation(f, initial_conditions, h, bounds, accuracy):
             y_2n = runge_kutta(f, local_init_y, local_h/2, local_bounds)
             
         y[i + 1] = y_2n
-    return y, x
+        hes[i + 1] = local_h
+    return y, x, hes
 
 
 def runge_kutta(f, initial_conditions, h, bounds):

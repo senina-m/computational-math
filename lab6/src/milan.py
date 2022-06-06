@@ -2,15 +2,16 @@ from runge_kutta import runge_kutta_differentiation
 from math import ceil
 
 def milan_differentiation(f, initial_conditions, h, bounds, accuracy):
-    n = ceil((bounds[1] - bounds[0])/ h) + 1 # здесь добавляется 1, чтобы количество точек было правильным (у k интервалов k+1 конец)
+    n = ceil((bounds[1] - bounds[0]) / h) + 1 # здесь добавляется 1, чтобы количество точек было правильным (у k интервалов k+1 конец)
     if (n < 4):
         print("For Milan differentiation num of intervals has to be at least 4!")
+        print(f"h = {h}, on  ({bounds[0]}, {bounds[1]}), n = ceil((bounds[1] - bounds[0])/ h) + 1 = {n}")
         exit(0)
     # для этих иксов нужно предсказать значение y
     x = [bounds[0] + h*i for i in range(n)]
     # print("_____________Count Runge-Kutta________________")
     y = [0]*(n)
-    runge_result, runge_x = runge_kutta_differentiation(f, initial_conditions, h, [x[0], x[3]], accuracy)
+    runge_result, runge_x, hes = runge_kutta_differentiation(f, initial_conditions, h, [x[0], x[3]], accuracy)
     for i in range(4):
         y[i] = runge_result[i]
     # print(y)

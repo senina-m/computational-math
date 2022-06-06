@@ -1,27 +1,41 @@
-from math import sin
+from math import sin, log2, sqrt, exp
 
 def get_data():
     print("Choose function:")
-    print("1 ----------------- f(x, y) = x^2 + y^2")
-    print("2 ----------------- f(x, y) = 1/xy")
-    print("3 ----------------- f(x, y) = y*sin(x)")
+    print("1 ----------------- y' = 2x")
+    print("2 ----------------- y' = e^(-3*x)")
+    print("3 ----------------- y' = 1/sqrt(x**2 - 1)")
+
     while True:
         try:
             choose_data_method = int(input())
             match (choose_data_method):
                 case 1:
-                    f =  lambda x, y : x**2 + y**2
+                    f =  lambda x, y: 2 * x
                     break
                 case 2:
-                    f = lambda x, y : 1 / x * y
+                    f = lambda x, y: exp(-3*x)
                     break
                 case 3:
-                    f = lambda x, y : y * sin(x)
+                    f = lambda x, y : 1/sqrt(x**2 - 1)
                     break
                 case _:
                     print("Enter your choice again!")
         except ValueError:
             print("Value has be integer! Try again from new line...")
+
+    print("Enter segment's bounds (enter the values separated by a space):")
+    while True:
+        try:
+            values = input().strip().split()
+            values = [float(i) for i in values]
+            if(len(values) == 2):
+                bounds = (min(values[0], values[1]), max(values[0], values[1]))
+                break
+            else:
+                print("Wrong format! Try again from new line...")
+        except ValueError:
+            print("Both values has be float! Try again from new line...")
 
     print("Enter the initial conditions as y(x_0)= ...")
     while True:
@@ -31,26 +45,16 @@ def get_data():
         except ValueError:
             print("Value has be float! Try again from new line...")
     
+    x0 = bounds[0]
+    y0 = initial_conditions
     match (choose_data_method):
         case 1:
-            f_result = 1 #TODO: f(x) = ... y0(x0)
+            f_result = lambda x: x**2 + y0 - x0**2
         case 2:
-            f_result = 1#TODO: f(x) = ... y0(x0)
+            f_result = lambda x: -1/3*exp(-3*x) + 1/3*exp(-3*x0) + y0
         case 3:
-            f_result = 1#TODO: f(x) = ... y0(x0)
+            f_result = lambda x: log2(abs(x + sqrt(x**2 - 1))) + y0
 
-    print("Enter segment's bounds (enter the values separated by a space):")
-    while True:
-        try:
-            values = input().strip().split()
-            [float(i) for i in values]
-            if(len(values) == 2):
-                bounds = (max(values[0], values[1]), min(values[0], values[1]))
-                break
-            else:
-                print("Wrong format! Try again from new line...")
-        except ValueError:
-            print("Both values has be float! Try again from new line...")
     
     print("Enter accuracy:")
     while True:
@@ -66,8 +70,8 @@ def get_data():
     print("Enter length of intervals h:")
     while True:
         try:
-            h = int(input())
-            if h < bounds[1] - bounds[0]:
+            h = float(input())
+            if h > bounds[1] - bounds[0]:
                 print("Length of intervals must be less than entered interval! Try again from new line..")
             else:
                 break
@@ -77,7 +81,7 @@ def get_data():
     print("Choose method:")
     print("1 ----------------- Runge–Kutta method")
     print("2 ----------------- Milan method")
-    # print("3 ----------------- both method")
+    print("3 ----------------- both method")
     while True:
         try:
             choose_data_method = int(input())
@@ -88,14 +92,14 @@ def get_data():
                 case 2:
                     method = "milan"
                     break
-                # case 3:
-                    # method = "both"
-                    # break
+                case 3:
+                    method = "both"
+                    break
                 case _:
                     print("Enter your choice again!")
         except ValueError:
             print("Value has be integer! Try again from new line...")
       
-    return f, initial_conditions, h, bounds, accuracy, method
+    return f, f_result, initial_conditions, h, bounds, accuracy, method
 
 

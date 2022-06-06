@@ -6,36 +6,29 @@ from milan import milan_differentiation
 from math import sin, exp, log2, sqrt
 
 def main():
-    f, f_result, initial_conditions, h, bounds, accuracy, method = get_data()
-    # f = lambda x, y : 1/sqrt(x**2 - 1)
-    # result_f = lambda x :  log2(abs(x + sqrt(x**2 - 1)))
-    # initial_conditions = 0
+    # f, f_result, initial_conditions, h, bounds, accuracy, method = get_data()
     f = lambda x, y : exp(-3*x)
-    result_f = lambda x :  -1/3*exp(-3*x) + 1
     initial_conditions = 2/3
-    h = 0.3
+    h = 0.2
     bounds = [0, 2]
+
+    f_result = lambda x :  -1/3*exp(-3*x) + 1/3*exp(-3*bounds[0]) + initial_conditions
     accuracy = 0.0001
-    # result, x = runge_kutta_differentiation(f, initial_conditions, h, bounds, accuracy)
+    method ="both"
+
     result_milan, x = milan_differentiation(f, initial_conditions, h, bounds, accuracy)
-    result_runge_kutta, x = runge_kutta_differentiation(f, initial_conditions, h, bounds, accuracy)
+    result_runge_kutta, x, hes = runge_kutta_differentiation(f, initial_conditions, h, bounds, accuracy)
     print("=============results=============")
-    print(f"milan\t\t{[round(i, 5) for i in result_milan]}")
-    print(f"runge_kutta\t{[round(i, 5) for i in result_runge_kutta]}")
-    print(f"Real values\t{[round(result_f(i), 5) for i in x]}")
-    method = "both"
-        
+    print(f"x\t\tmilan\t\trunge\t\trunge h\t\treal\t\t")
+    for i in range(len(x)):
+        print(f"{round(x[i], 3)}\t\t{round(result_milan[i], 5)}\t\t{round(result_runge_kutta[i], 5)}\t\t{round(hes[i], 5)}\t\t {round(f_result(i), 5)}")
     match (method):
         case "runge–kutta":
-            result, x = runge_kutta_differentiation(f, initial_conditions, h, bounds, accuracy)
-            plot_result(f_result, x, result, method)
+            plot_result(f_result, x, result_runge_kutta, method)
         case "milan":
-            result, x = milan_differentiation(f, initial_conditions, h, bounds, accuracy)
-            plot_result(f_result, x, result, method)
+            plot_result(f_result, x, result_milan, method)
         case "both":
-            rungekutta_result, x = runge_kutta_differentiation(f, initial_conditions, h, bounds, accuracy)
-            milan_result, x = milan_differentiation(f, initial_conditions, h, bounds, accuracy)
-            plot_both_results(f, x, milan_result, rungekutta_result)
+            plot_both_results(f, x, result_milan, result_runge_kutta, [round(f_result(i), 4) for i in x])
         case _:
             print("Error in getting data from user!")
 main()

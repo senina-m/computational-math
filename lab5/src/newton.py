@@ -1,4 +1,5 @@
 from math import factorial
+import pandas as pd
 
 def newton_interpolation(x, y, point):
 
@@ -8,12 +9,17 @@ def newton_interpolation(x, y, point):
         result = newton_not_const_h(x, y, point)
     return result
 
+def print_fd(fd):
+    df = pd.DataFrame(fd)
+    print(df.to_latex())
 #----------------- CONST H ------------------
 def newton_const_h(x, y, point):
     n = len(x)
     h = abs(x[1] - x[0])
     finite_differences = count_finite_differences_const_h(x, y)
+    print_fd(finite_differences)
     if point <= x[n // 2]: # if point is closer to beginning we use FIRST Formula (forward)
+        print("forward")
         x0 = search_for_x0(x, point)
         t = (point - x[x0]) / h
 
@@ -21,11 +27,15 @@ def newton_const_h(x, y, point):
         for i in range(1, n):
             result += (t_forward(t, i) * finite_differences[x0][i]) / factorial(i)
     else:                  # if point is closer to beginning we use SECOND Formula (back)
+        print("back")
         t = (point - x[n - 1]) / h
 
         result = finite_differences[n - 1][0]
+        print(finite_differences[n - 1][0])
         for i in range(1, n):
             result += (t_back(t, i) * finite_differences[n - i - 1][i]) / factorial(i)
+            print(f"{round(t_back(t, i), 3)} * {round(finite_differences[n - i - 1][i], 3)} / {factorial(i)}")
+
 
     return result
 
