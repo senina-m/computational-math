@@ -16,7 +16,7 @@ def main():
     # point = 0.15
 
     
-    match (method):
+    match method:
         case "newton":
             result = newton_interpolation(x, y, point)
             plot_result(x, y, point, result)

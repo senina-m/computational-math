@@ -3,25 +3,27 @@ from plot import plot_result
 from plot import plot_both_results
 from runge_kutta import runge_kutta_differentiation
 from milan import milan_differentiation
-from math import sin, exp, log2, sqrt
 
 def main():
     # f, f_result, initial_conditions, h, bounds, accuracy, method = get_data()
-    f = lambda x, y : exp(-3*x)
-    initial_conditions = 2/3
-    h = 0.2
-    bounds = [0, 2]
+    f = lambda x, y : y + 2*x
+    initial_conditions = 0
+    h = 0.05
 
-    f_result = lambda x :  -1/3*exp(-3*x) + 1/3*exp(-3*bounds[0]) + initial_conditions
+    bounds = [0, 2]
+    x0 = bounds[0]
+    y0= initial_conditions
+    f_result = lambda x : 2*x + y0 - 2*x0
     accuracy = 0.0001
     method ="both"
 
     result_milan, x = milan_differentiation(f, initial_conditions, h, bounds, accuracy)
     result_runge_kutta, x, hes = runge_kutta_differentiation(f, initial_conditions, h, bounds, accuracy)
+    # plot_result(x, result_milan, [round(f_result(i), 4) for i in x], "milan")
     print("=============results=============")
     print(f"x\t\tmilan\t\trunge\t\trunge h\t\treal\t\t")
     for i in range(len(x)):
-        print(f"{round(x[i], 3)}\t\t{round(result_milan[i], 5)}\t\t{round(result_runge_kutta[i], 5)}\t\t{round(hes[i], 5)}\t\t {round(f_result(i), 5)}")
+        print(f"{round(x[i], 3)}\t\t{round(result_milan[i], 4)}\t\t{round(result_runge_kutta[i], 5)}\t\t{round(hes[i], 5)}\t\t {round(f_result(i), 5)}")
     match (method):
         case "runge–kutta":
             plot_result(f_result, x, result_runge_kutta, method)
