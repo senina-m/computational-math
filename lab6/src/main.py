@@ -7,13 +7,13 @@ from milan import milan_differentiation
 def main():
     # f, f_result, initial_conditions, h, bounds, accuracy, method = get_data()
     f = lambda x, y : y + 2*x
-    initial_conditions = 0
-    h = 0.05
+    initial_conditions = 1
+    h = 0.1
 
-    bounds = [0, 2]
+    bounds = [6, 10]
     x0 = bounds[0]
     y0= initial_conditions
-    f_result = lambda x : 2*x + y0 - 2*x0
+    f_result = lambda x : 1/2*x + y0 - 2*x0
     accuracy = 0.0001
     method ="both"
 
