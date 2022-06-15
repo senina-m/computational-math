@@ -90,7 +90,7 @@ def get_data():
                     method =  "runge–kutta"
                     break
                 case 2:
-                    method = "milan"
+                    method = "miln"
                     break
                 case 3:
                     method = "both"

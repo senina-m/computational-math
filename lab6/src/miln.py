@@ -3,7 +3,7 @@ from math import ceil
 import numpy as np
 import pandas as pd
 
-def milan_differentiation(f, initial_conditions, h, bounds, accuracy):
+def miln_differentiation(f, initial_conditions, h, bounds, accuracy):
     print("_____________________ MILAN _____________________________")
     n = ceil((bounds[1] - bounds[0]) / h) + 1 # здесь добавляется 1, чтобы количество точек было правильным (у k интервалов k+1 конец)
     if (n < 4):
