@@ -16,15 +16,15 @@ def plot_result(y, x, f, method):
     ax.grid()
     pass
 
-def plot_both_results(f, x, y_milan, y_runge, f_result):
+def plot_both_results(f, x, y_miln, y_runge, f_result):
     fig = plt.figure()
     fig.suptitle('differentiation result', fontsize=20)
     ax = fig.add_subplot(111)
     plt.xlabel('x', fontsize=16)
     plt.ylabel('y', fontsize=16)
-    plt.plot(x, y_runge, marker="o", color="green", label=f"runge-kutta differentiation result") #marker circle
-    plt.plot(x, y_milan, marker="o", color="red", label=f"milan differentiation result") #marker circle
-    plt.plot(x, f_result, marker=".", color="blue", label="input function") #marker point
+    plt.plot(x, f_result, marker="D", color="blue", label="real solution function") #marker point
+    plt.plot(x, y_miln, marker="o", color="red", label=f"miln differentiation result") #marker circle
+    plt.plot(x, y_runge, marker=".", color="green", label=f"runge-kutta differentiation result") #marker circle
     ax.grid()
     #для того, чтобы подписывать значения на графике
     # for i,j in zip([round(i, 3) for i in x], [round(i, 3) for i in f_result]):

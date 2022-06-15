@@ -6,18 +6,18 @@ from milan import milan_differentiation
 from math import exp
 
 def main():
-    # f, f_result, initial_conditions, h, bounds, accuracy, method = get_data()
-    e = 0.00001
-    f = lambda x, y : exp(-3*x)
-    initial_conditions = 2/3
-    h = 0.1
+    f, f_result, initial_conditions, h, bounds, accuracy, method = get_data()
+    # e = 0.00001
+    # f = lambda x, y : exp(-3*x)
+    # initial_conditions = 2/3
+    # h = 0.1
 
-    bounds = [0, 3]
-    x0 = bounds[0]
-    y0 = initial_conditions
-    f_result = lambda x : -1/3 * exp(-3 * x) + y0 + 1/3 * exp(-3*x0)
-    accuracy = 0.0001
-    method ="both"
+    # bounds = [0, 3]
+    # x0 = bounds[0]
+    # y0 = initial_conditions
+    # f_result = lambda x : -1/3 * exp(-3 * x) + y0 + 1/3 * exp(-3*x0)
+    # accuracy = 0.0001
+    # method ="both"
 
     result_milan, x = milan_differentiation(f, initial_conditions, h, bounds, accuracy)
     result_runge_kutta, x, hes = runge_kutta_differentiation(f, initial_conditions, h, bounds, accuracy)
